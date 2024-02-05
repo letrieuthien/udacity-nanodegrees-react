@@ -18,6 +18,12 @@ export const BookList = () => {
         getBookList().then();
     }, [])
 
+    const shelfList = [
+        {label: "Currently Reading", enum: shelfEnum.READING},
+        {label: "Want to Read", enum: shelfEnum.WANT_TO_READ},
+        {label: "Read", enum: shelfEnum.READ},
+    ]
+
     return (
         <div className="app">
             <div className="list-books">
@@ -26,42 +32,22 @@ export const BookList = () => {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <div className="bookshelf">
-                            <h2 className="bookshelf-title">Currently Reading</h2>
-                            <div className="bookshelf-books">
-                                <ol className="books-grid">
-                                    {
-                                        bookList.length > 0 ? (
-                                            bookList.filter(book => book.shelf === shelfEnum.READING).map((book, index) =>
-                                                (<BookItem book={book} key={index} parentCallback={() => getBookList()}/>))) : null
-                                    }
-                                </ol>
-                            </div>
-                        </div>
-                        <div className="bookshelf">
-                            <h2 className="bookshelf-title">Want to Read</h2>
-                            <div className="bookshelf-books">
-                                <ol className="books-grid">
-                                    {
-                                        bookList.length > 0 ? (
-                                            bookList.filter(book => book.shelf === shelfEnum.WANT_TO_READ).map((book, index) =>
-                                                (<BookItem book={book} key={index} parentCallback={() => getBookList()}/>))) : null
-                                    }
-                                </ol>
-                            </div>
-                        </div>
-                        <div className="bookshelf">
-                            <h2 className="bookshelf-title">Read</h2>
-                            <div className="bookshelf-books">
-                                <ol className="books-grid">
-                                    {
-                                        bookList.length > 0 ? (
-                                            bookList.filter(book => book.shelf === shelfEnum.READ).map((book, index) =>
-                                                (<BookItem book={book} key={index} parentCallback={() => getBookList()}/>))) : null
-                                    }
-                                </ol>
-                            </div>
-                        </div>
+                        {
+                            shelfList.map(d =>
+                                <div className="bookshelf" key={d.label}>
+                                    <h2 className="bookshelf-title">{d.label}</h2>
+                                    <div className="bookshelf-books">
+                                        <ol className="books-grid">
+                                            {
+                                            bookList.length > 0 ? (
+                                                bookList.filter(book => book.shelf === d.enum).map((book, index) =>
+                                                    (<BookItem book={book} key={index} parentCallback={() => getBookList()}/>))) : null
+                                        }
+                                        </ol>
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
                 <div className="open-search">
